@@ -42,53 +42,33 @@
         <!-- Spinner End -->
 
 
-        <!-- Sidebar Start -->
-        <?php include 'sidebar.php'; ?>
-        <!-- Sidebar End -->
-
-
-        <!-- Content Start -->
-        <div class="content">
-            <!-- Navbar Start -->
-            <?php include 'navbar.php'; ?>
-            <!-- Navbar End -->
-
-
-            <!-- Chart Start -->
-          
-            <!-- Chart End -->
-             <!-- Form Start -->
-             <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4">
-                     
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light rounded h-100 p-4">
-                                <h6 class="mb-4">Delivery Agents</h6>
-                                <div class="">
-                                    <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
-                                        <option
-                                          class="" selected>Select Delivery Agents </option>
-                                        <option value="1">Balu</option>
-                                        <option value="2">Jagadeesh</option>
-                                        <option value="3">Nani</option>
-                                    </select>
-                                </div>
-                
-                            </div>
-                        </div>
-     
-                    </div>
+        <!-- Sign In Start -->
+        <div class="container-fluid">
+     <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <a href="index.html" class="">
+                        <h3 class="text-primary"><i class="fa fa-person me-2"></i>Admin </h3>
+                    </a>
                 </div>
-            <!-- Form End -->
+                <form id="loginForm" method="POST" action="verify_login.php">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" name="mobile_number" placeholder="name@example.com">
+                        <label for="floatingInput">Mobile Number</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
 
-         
+                    <button type="button" class="btn btn-primary py-3 w-100 mb-4" onclick="handleLogin()">Log In</button>
+                </form>
+            </div>
         </div>
-        <!-- Content End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+</div>
+        <!-- Sign In End -->
     </div>
 
     <!-- JavaScript Libraries -->
@@ -104,6 +84,51 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+// Function to validate login form
+function validateLogin() {
+    var mobileNumber = document.getElementById('floatingInput').value;
+    var password = document.getElementById('floatingPassword').value;
+
+    // Validate mobile number
+    if (mobileNumber.trim() === '') {
+        alert('Please enter mobile number.');
+        return false;
+    }
+
+    // Validate password
+    if (password.trim() === '') {
+        alert('Please enter password.');
+        return false;
+    }
+
+    // All validations passed, allow form submission
+    return true;
+}
+</script>
+    
+
+
+
+<script>
+// Function to handle login button click
+function handleLogin() {
+    // Retrieve the mobile number and password from the input fields
+    var mobileNumber = document.getElementById('floatingInput').value;
+    var password = document.getElementById('floatingPassword').value;
+
+    // Make sure both fields are filled
+    if (mobileNumber === '' || password === '') {
+        alert('Please enter mobile number and password.');
+        return;
+    }
+
+    // Submit the form
+    document.getElementById('loginForm').submit();
+}
+</script>
+
 </body>
 
 </html>
