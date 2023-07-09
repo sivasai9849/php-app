@@ -1,3 +1,36 @@
+<?php
+//session_start(); // Add session_start() to initialize session
+
+require_once 'db/db_con.php';
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Prepare the SQL statement using prepared statements
+    $query = "SELECT * FROM admin WHERE username = ? AND password = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    mysqli_stmt_execute($stmt);
+
+    // Fetch the result
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) == 1) {
+        $_SESSION['username'] = $username;
+        header("location: index.php");
+        exit; // Add exit to terminate the script after redirecting
+    } else {
+        echo "Invalid username or password";
+    }
+}
+$connection->close();
+// Output the received username and password (for testing)
+echo $username;
+echo $password;
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -41,33 +74,32 @@
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sign In Start -->
         <div class="container-fluid">
-     <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-            <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a href="index.html" class="">
-                        <h3 class="text-primary"><i class="fa fa-person me-2"></i>Admin </h3>
-                    </a>
-                </div>
-                <form id="loginForm" method="POST" action="verify_login.php">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" name="mobile_number" placeholder="name@example.com">
-                        <label for="floatingInput">Mobile Number</label>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
-                    </div>
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="index.html" class="">
+                                <h3 class="text-primary"><i class="fa fa-person me-2"></i>Admin </h3>
+                            </a>
+                        </div>
+                        <form id="loginForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="name@example.com" value="<?php echo htmlspecialchars($username); ?>">
+                                <label for="floatingInput">Username</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?php echo htmlspecialchars($password); ?>">
+                                <label for="floatingPassword">Password</label>
+                            </div>
 
-                    <button type="button" class="btn btn-primary py-3 w-100 mb-4" onclick="handleLogin()">Log In</button>
-                </form>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="return validateLogin()">Log In</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         <!-- Sign In End -->
     </div>
 
@@ -86,49 +118,27 @@
     <script src="js/main.js"></script>
 
     <script>
-// Function to validate login form
-function validateLogin() {
-    var mobileNumber = document.getElementById('floatingInput').value;
-    var password = document.getElementById('floatingPassword').value;
+        // Function to validate login form
+        function validateLogin() {
+            var mobileNumber = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
 
-    // Validate mobile number
-    if (mobileNumber.trim() === '') {
-        alert('Please enter mobile number.');
-        return false;
-    }
+            // Validate mobile number
+            if (mobileNumber.trim() === "") {
+                alert("Please enter a username.");
+                return false;
+            }
 
-    // Validate password
-    if (password.trim() === '') {
-        alert('Please enter password.');
-        return false;
-    }
+            // Validate password
+            if (password.trim() === "") {
+                alert("Please enter a password.");
+                return false;
+            }
 
-    // All validations passed, allow form submission
-    return true;
-}
-</script>
-    
-
-
-
-<script>
-// Function to handle login button click
-function handleLogin() {
-    // Retrieve the mobile number and password from the input fields
-    var mobileNumber = document.getElementById('floatingInput').value;
-    var password = document.getElementById('floatingPassword').value;
-
-    // Make sure both fields are filled
-    if (mobileNumber === '' || password === '') {
-        alert('Please enter mobile number and password.');
-        return;
-    }
-
-    // Submit the form
-    document.getElementById('loginForm').submit();
-}
-</script>
-
+            // All validations passed, allow form submission
+            return true;
+        }
+    </script>
 </body>
 
 </html>
