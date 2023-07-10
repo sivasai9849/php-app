@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    include_once 'db/connect.php';
+    if(!isset($_SESSION['username'])){
+        header('location:login.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
