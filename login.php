@@ -1,3 +1,55 @@
+<?php
+// Start session
+session_start();
+
+// Include the database connection file
+include_once 'db/connect.php';
+
+// Check if the user is already logged in, if yes then redirect him to the welcome page
+if (isset($_SESSION["username"])) {
+    header("location: index.php");
+    exit;
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Prepare a SQL statement with parameterized query
+    $query = "SELECT * FROM admin WHERE username = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row['password'];
+
+        // Verify the password
+        if (password_verify($password, $hashedPassword)) {
+            // Password is correct, start a new session
+            $_SESSION['username'] = $username;
+            header("location: index.php");
+            exit;
+        } else {
+            $error = "Incorrect password.";
+        }
+    } else {
+        $error = "Incorrect username.";
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    // Redirect with error message
+    header("location: login.php?error=" . urlencode($error));
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,16 +104,16 @@
                         <h3 class="text-primary"><i class="fa fa-person me-2"></i>Admin </h3>
                     </a>
                 </div>
-                <form id="loginForm" method="POST" action="verify_login.php">
+                <form id="loginForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" name="mobile_number" placeholder="name@example.com">
-                        <label for="floatingInput">Mobile Number</label>
+                        <input type="email" class="form-control" id="username" name="username" placeholder="Username">
+                        <label for="username">Username</label>
                     </div>
                     <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        <label for="password">Password</label>
                     </div>
-
+                    <div id="error-message" class="alert alert-danger mt-3 <?php echo isset($_GET['error']) ? '' : 'd-none'; ?>"><?php echo isset($_GET['error']) ? $_GET['error'] : ''; ?></div>
                     <button type="button" class="btn btn-primary py-3 w-100 mb-4" onclick="handleLogin()">Log In</button>
                 </form>
             </div>
@@ -88,11 +140,11 @@
     <script>
 // Function to validate login form
 function validateLogin() {
-    var mobileNumber = document.getElementById('floatingInput').value;
-    var password = document.getElementById('floatingPassword').value;
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
     // Validate mobile number
-    if (mobileNumber.trim() === '') {
+    if (username.trim() === '') {
         alert('Please enter mobile number.');
         return false;
     }
@@ -115,11 +167,11 @@ function validateLogin() {
 // Function to handle login button click
 function handleLogin() {
     // Retrieve the mobile number and password from the input fields
-    var mobileNumber = document.getElementById('floatingInput').value;
-    var password = document.getElementById('floatingPassword').value;
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
     // Make sure both fields are filled
-    if (mobileNumber === '' || password === '') {
+    if (username === '' || password === '') {
         alert('Please enter mobile number and password.');
         return;
     }

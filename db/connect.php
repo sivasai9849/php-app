@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Connected successfully
-echo "Connected successfully to the database.";
+
 
 // Close connection
 // $conn->close();
