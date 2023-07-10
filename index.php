@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["username"])) {
+    header("location:login.php");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -55,7 +65,7 @@
 
 
             <!-- Sale & Revenue Start -->
-           <!-- <div class="container-fluid pt-4 px-4">
+            <!-- <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
@@ -124,165 +134,40 @@
             <!-- Sales Chart End -->
 
 
-           <!--assign start -->
+            <!--assign start -->
             <!-- Button Start -->
-                 <!-- Form Start -->
-                 <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4">
-                     
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light rounded h-100 p-4">
-                                <h6 class="mb-4">Delivery Agents</h6>
-                              
-                              
-                                <div class="">
-                                    <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
-                                        <option
-                                          class="" selected>Select Delivery Agents </option>
-                                        <option value="1">Balu</option>
-                                        <option value="2">Jagadeesh</option>
-                                        <option value="3">Nani</option>
-                                    </select>
-                                </div>
-                
-                            </div>
-                        </div>
-     
-                    </div>
-                </div>
+            <!-- Form Start -->
+
+
             <!-- Form End -->
             <!-- Button End -->
-          
+
 
             <!--assign end -->
             <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Customers Data</h6>
-                        <a href="">Show All</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                  <!-- <th scope="col"><input class="form-check-input" type="checkbox"></th>--> 
-                                    <th scope="col">Date</th>
-                                    <th scope="col">School-ID</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">address</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Assign</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
             <!-- Recent Sales End -->
 
 
-              <!-- Status Start -->
-              <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">TOTAL</h6>
-                                <p class="btn btn-primary rounded-pill m-2">80</p>
-                                
-                            </div>
+            <!-- Status Start -->
+
+
+            <!-- Status End -->
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">Not Picked UP</h6>
-                                <p class="btn btn-danger rounded-pill m-2">25</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">IN TRANSIT</h6>
-                                <p class="btn btn-warning rounded-pill m-2">25</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">COMPLETED</h6>
-                                <p class="btn btn-success rounded-pill m-2">30</p>
-                                
-                            </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/* This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. */-->
+                            Designed By <a href="">HTML Codex</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Status End -->
-                <!-- Footer Start -->
-                <div class="container-fluid pt-4 px-4">
-                  <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                       &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                    </div>
-                   <div class="col-12 col-sm-6 text-center text-sm-end">
-                    <!--/* This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. */-->
-                      Designed By <a href="">HTML Codex</a>
-                   </div>
-                </div>
-           </div>
-        </div>
-         <!-- Footer End -->
+            <!-- Footer End -->
         </div>
 
         <!-- Content End -->
