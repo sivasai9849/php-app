@@ -127,102 +127,15 @@
            <!--assign start -->
             <!-- Button Start -->
                  <!-- Form Start -->
-                 <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4">
-                     
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light rounded h-100 p-4">
-                                <h6 class="mb-4">Delivery Agents</h6>
-                              
-                              
-                                <div class="">
-                                    <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
-                                        <option
-                                          class="" selected>Select Delivery Agents </option>
-                                        <option value="1">Balu</option>
-                                        <option value="2">Jagadeesh</option>
-                                        <option value="3">Nani</option>
-                                    </select>
-                                </div>
-                
-                            </div>
-                        </div>
-     
-                    </div>
-                </div>
+                 
+ 
             <!-- Form End -->
             <!-- Button End -->
           
-
+<?php include('./test.php') ?>
             <!--assign end -->
             <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Customers Data</h6>
-                        <a href="">Show All</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                  <!-- <th scope="col"><input class="form-check-input" type="checkbox"></th>--> 
-                                    <th scope="col">Date</th>
-                                    <th scope="col">School-ID</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">address</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Assign</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                                <tr>
-                                   <!-- <td><input class="form-check-input" type="checkbox"></td>-->                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Assign</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Recent Sales End -->
 
 
@@ -267,6 +180,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Status End -->
                 <!-- Footer Start -->
                 <div class="container-fluid pt-4 px-4">
