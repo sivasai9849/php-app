@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["username"])) {
+    header("location:login.php");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -132,7 +142,11 @@
             <!-- Form End -->
             <!-- Button End -->
           
+<<<<<<< HEAD
 <?php include('./assign.php') ?>
+=======
+
+>>>>>>> origin/sivasai
             <!--assign end -->
             <!-- Recent Sales Start -->
             
