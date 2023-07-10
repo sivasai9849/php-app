@@ -142,11 +142,10 @@ if (!isset($_SESSION["username"])) {
             <!-- Form End -->
             <!-- Button End -->
           
-<<<<<<< HEAD
-<?php include('./assign.php') ?>
-=======
 
->>>>>>> origin/sivasai
+<?php include('./assign.php') ?>
+
+
             <!--assign end -->
             <!-- Recent Sales Start -->
             
