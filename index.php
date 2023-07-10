@@ -25,7 +25,7 @@ if (!isset($_SESSION["username"])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -65,7 +65,7 @@ if (!isset($_SESSION["username"])) {
 
 
             <!-- Sale & Revenue Start -->
-           <!-- <div class="container-fluid pt-4 px-4">
+            <!-- <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
@@ -134,79 +134,40 @@ if (!isset($_SESSION["username"])) {
             <!-- Sales Chart End -->
 
 
-           <!--assign start -->
+            <!--assign start -->
             <!-- Button Start -->
-                 <!-- Form Start -->
-                 
- 
+            <!-- Form Start -->
+
+
             <!-- Form End -->
             <!-- Button End -->
-          
+
 
             <!--assign end -->
             <!-- Recent Sales Start -->
-            
+
             <!-- Recent Sales End -->
 
 
-              <!-- Status Start -->
-              <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">TOTAL</h6>
-                                <p class="btn btn-primary rounded-pill m-2">80</p>
-                                
-                            </div>
+            <!-- Status Start -->
+
+
+            <!-- Status End -->
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">Not Picked UP</h6>
-                                <p class="btn btn-danger rounded-pill m-2">25</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">IN TRANSIT</h6>
-                                <p class="btn btn-warning rounded-pill m-2">25</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <div class="ms-3">
-                                <h6 class="mb-0">COMPLETED</h6>
-                                <p class="btn btn-success rounded-pill m-2">30</p>
-                                
-                            </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/* This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. */-->
+                            Designed By <a href="">HTML Codex</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Status End -->
-                <!-- Footer Start -->
-                <div class="container-fluid pt-4 px-4">
-                  <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                       &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                    </div>
-                   <div class="col-12 col-sm-6 text-center text-sm-end">
-                    <!--/* This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. */-->
-                      Designed By <a href="">HTML Codex</a>
-                   </div>
-                </div>
-           </div>
-        </div>
-         <!-- Footer End -->
+            <!-- Footer End -->
         </div>
 
         <!-- Content End -->
