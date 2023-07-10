@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 08, 2023 at 06:14 AM
+-- Generation Time: Jul 10, 2023 at 12:33 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -34,6 +34,38 @@ CREATE TABLE `address` (
   `pincode` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`addr_id`, `area`, `apartment`, `pincode`) VALUES
+(1, 'ASR Road', 'ASR Apartment', 534205);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `mobile` varchar(12) NOT NULL,
+  `email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`username`, `password`, `name`, `mobile`, `email`) VALUES
+('admin1', 'password1', 'Sanju', '1234567890', 'john.doe@example.com'),
+('admin2', 'password2', 'Jane Smith', '9876543210', 'jane.smith@example.com'),
+('admin3', 'password3', 'Michael Johnson', '5555555555', 'michael.johnson@example.com'),
+('admin4', 'password4', 'Sarah Davis', '9999999999', 'sarah.davis@example.com'),
+('admin5', 'password5', 'David Wilson', '1111111111', 'david.wilson@example.com');
+
 -- --------------------------------------------------------
 
 --
@@ -59,7 +91,7 @@ CREATE TABLE `child` (
 CREATE TABLE `deliveryagent` (
   `agent_id` int(11) NOT NULL,
   `agent_name` varchar(250) NOT NULL,
-  `agent_number` int(12) NOT NULL
+  `agent_number` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,7 +103,7 @@ CREATE TABLE `deliveryagent` (
 CREATE TABLE `parent` (
   `p_id` int(11) NOT NULL,
   `p_name` varchar(250) NOT NULL,
-  `p_number` int(12) NOT NULL,
+  `p_number` varchar(12) NOT NULL,
   `addr_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -125,6 +157,14 @@ ALTER TABLE `address`
   ADD PRIMARY KEY (`addr_id`);
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `mobile` (`mobile`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indexes for table `child`
 --
 ALTER TABLE `child`
@@ -174,7 +214,7 @@ ALTER TABLE `trips`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `addr_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `addr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `child`
