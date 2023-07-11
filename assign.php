@@ -68,7 +68,6 @@ function fetchDeliveryAgents() {
                     function fetchData()
                     {
                         global $conn; // Assuming $conn is the database connection variable defined in connect.php
-
                         // SQL query to fetch data from the table
                         $sql = "SELECT
                         p.p_name AS parent_name,
@@ -104,7 +103,9 @@ function fetchDeliveryAgents() {
                                 echo "<td>" . $parentName . "</td>";
                                 echo "<td>". $childName."</td>";
                                 echo "<td>" . $address . "</td>";
-                                echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $cId . "'>Assign</button></td>";
+                                echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $childName . "'>Assign</button></td>";
+
+
                                 echo "</tr>";
                             }
                         } else {
@@ -124,31 +125,32 @@ function fetchDeliveryAgents() {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Assign button click event
-        $(".assign-btn").click(function () {
-            var cId = $(this).data("cid");
-            var agentId = $("#floatingSelect").val(); // Get the selected agent ID from the dropdown
-
-            // AJAX request to assign the trip
-            $.ajax({
-                url: "./assign_trip.php", // Replace with the path to your assign_trip.php file
-                method: "POST",
-                data: {
-                    cId: cId,
-                    agentId: agentId // Pass the selected agent ID
-                },
-                success: function (response) {
-                    // Handle the response
-                    console.log(response);
-                    alert("Trip assigned successfully.");
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error
-                    console.error(xhr.responseText);
-                    alert("Failed to assign trip. Please try again.");
-                }
-            });
-        });
+// Assign button click event
+$(".assign-btn").click(function () {
+    var cId = $(this).data("cid");
+    var agentId = $("#floatingSelect").val(); // Get the selected agent ID from the dropdown
+console.log(cId);
+console.log(agentId);
+    // AJAX request to assign the trip
+    $.ajax({
+        url: "assign_trip.php", // Replace with the path to your assign_trip.php file
+        method: "POST",
+        data: {
+            cId: cId,
+            agentId: agentId // Pass the selected agent ID
+        },
+        success: function (response) {
+            // Handle the response
+            console.log(response);
+            alert("Trip assigned successfully.");
+        },
+        error: function (xhr, status, error) {
+            // Handle the error
+            console.error(xhr.responseText);
+            alert("Failed to assign trip. Please try again.");
+        }
     });
+});
+
+
 </script>

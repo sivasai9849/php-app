@@ -1,6 +1,6 @@
 <?php
 require_once "connect.php"; // Replace with the correct path to your connect.php file
-
+global $conn;
 if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
     $cId = $_POST["cId"];
     $date = date("Y-m-d");
