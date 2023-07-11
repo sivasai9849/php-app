@@ -1,5 +1,12 @@
 <?php
-require_once "connect.php"; // Replace with the correct path to your connect.php file
+session_start();
+
+if (!isset($_SESSION["username"])) {
+    header("location:login.php");
+    exit;
+}
+
+require_once "./db/connect.php"; // Replace with the correct path to your connect.php file
 global $conn;
 if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
     $cId = $_POST["cId"];
