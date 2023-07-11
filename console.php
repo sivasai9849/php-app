@@ -62,7 +62,33 @@
 
 
             <!-- Chart Start -->
-          
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <h6 class="mb-0">Select Date</h6>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <h6 class="mb-0">Select Agent</h6>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <h6 class="mb-0">Select Parent</h6>                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
             <!-- Chart End -->
              <!-- Form Start -->
             <!-- Form End -->
