@@ -150,7 +150,7 @@ console.log(agentId);
         success: function (response) {
             // Handle the response
             console.log(response);
-            alert("Trip assigned successfully.");
+           // alert("Trip assigned successfully.");
         },
         error: function (xhr, status, error) {
             // Handle the error
