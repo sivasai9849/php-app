@@ -33,6 +33,9 @@ function fetchDeliveryAgents() {
         echo '<option value="" disabled>No delivery agents found</option>';
     }
 }
+
+
+
 ?>
 
 <div class="container-fluid pt-4 px-4">
@@ -135,8 +138,11 @@ function fetchDeliveryAgents() {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 // Assign button click event
-$(".assign-btn").click(function () {
-    var cId = $(this).data("cid");
+$(document).on("click", ".assign-btn", function () {
+    var button = $(this); // Store the button element in a variable
+
+    var cId = button.data("cid");
+
     var agentId = $("#floatingSelect").val(); // Get the selected agent ID from the dropdown
 console.log(cId);
 console.log(agentId);
@@ -151,6 +157,9 @@ console.log(agentId);
         success: function (response) {
             // Handle the response
             console.log(response);
+            button.text("" + response);
+            button.removeClass("btn-primary").addClass("btn-secondary"); // Change button color to grey
+            button.prop("disabled", true); // Disable the button
            // alert("Trip assigned successfully.");
         },
         error: function (xhr, status, error) {

@@ -10,24 +10,54 @@ require_once "./db/connect.php"; // Replace with the correct path to your connec
 
 if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
     $cId = $_POST["cId"];
-    $date = date("Y-m-d");
+    $date = date('Y-m-d');
     $agentId = $_POST["agentId"]; // Use the selected agent ID from the AJAX request
 
-    // Prepare the SQL statement to avoid SQL injection
-    $sql = "INSERT INTO trips (date, c_id, agent_id) VALUES (?, ?, ?)";
+    // Check if a trip with the same child ID and date already exists
+    $checkSql = "SELECT * FROM trips WHERE c_id = ? AND date = ?";
+    $getAgentIdSql = "SELECT agent_name FROM deliveryagent WHERE agent_id = ?";
+    
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("ss", $cId, $date);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $date, $cId, $agentId);
+    if ($checkResult->num_rows > 0) {
+        // Trip already assigned
+        $getAgentIdStmt = $conn->prepare($getAgentIdSql);
+        $getAgentIdStmt->bind_param("s", $agentId);
+        $getAgentIdStmt->execute();
+        $getAgentIdResult = $getAgentIdStmt->get_result();
 
-    if ($stmt->execute()) {
-        echo "Trip assigned successfully.";
+        if ($getAgentIdResult->num_rows > 0) {
+            $agentData = $getAgentIdResult->fetch_assoc();
+            $agentName = $agentData["agent_name"];
+            echo "Trip assigned to" . $agentName;
+        } else {
+            echo "Agent not found.";
+        }
+
+        $getAgentIdStmt->close();
     } else {
-        echo "Error assigning trip: " . $stmt->error;
+        // Prepare the SQL statement to insert the trip
+        $insertSql = "INSERT INTO trips (date, c_id, agent_id) VALUES (?, ?, ?)";
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param("sss", $date, $cId, $agentId);
+
+        if ($insertStmt->execute()) {
+            echo "" . $agentName;
+        } else {
+            echo "Error assigning trip: " . $insertStmt->error;
+        }
+
+        $insertStmt->close();
     }
 
-    $stmt->close();
+    $checkStmt->close();
     $conn->close();
 } else {
     echo "Invalid request.";
 }
+
+
 ?>
