@@ -12,9 +12,9 @@ if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
     $cId = $_POST["cId"];
     $date = date("Y-m-d");
     $agentId = $_POST["agentId"]; // Use the selected agent ID from the AJAX request
-echo $cId,$agentId,$date;
+
     // Prepare the SQL statement to avoid SQL injection
-    $sql = "INSERT INTO trips (date, c_id, agent_id) VALUES ($date,$cId,$agentId)";
+    $sql = "INSERT INTO trips (date, c_id, agent_id) VALUES (?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $date, $cId, $agentId);

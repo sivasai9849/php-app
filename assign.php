@@ -80,6 +80,7 @@ function fetchDeliveryAgents() {
                         $sql = "SELECT
                         p.p_name AS parent_name,
                         c.c_name AS child_name,
+                        c.c_id As cId,
                         a.apartment,
                         a.area,
                         a.pincode,
@@ -103,7 +104,7 @@ function fetchDeliveryAgents() {
                                 $parentName = $row["parent_name"];
                                 $address = $row["apartment"] . ", " . $row["area"] . ", " . $row["pincode"];
                                 $childName = $row["child_name"];
-                                
+                                $cId=$row["cId"];
 
                                 echo "<tr>";
                                 echo "<td>" . $date . "</td>";
@@ -111,7 +112,7 @@ function fetchDeliveryAgents() {
                                 echo "<td>" . $parentName . "</td>";
                                 echo "<td>". $childName."</td>";
                                 echo "<td>" . $address . "</td>";
-                                echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $childName . "'>Assign</button></td>";
+                                echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $cId . "'>Assign</button></td>";
 
 
                                 echo "</tr>";
