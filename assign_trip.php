@@ -32,7 +32,7 @@ if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
         if ($getAgentIdResult->num_rows > 0) {
             $agentData = $getAgentIdResult->fetch_assoc();
             $agentName = $agentData["agent_name"];
-            echo "Trip assigned to" . $agentName;
+            echo "Trip assigned to " . $agentName;
         } else {
             echo "Agent not found.";
         }
