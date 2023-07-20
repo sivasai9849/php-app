@@ -67,7 +67,7 @@
         font-size: 12px;
          }
       </style>
-    <div class="container-fluid pt-1 pb-1 px-4 mt-4 bg-light">
+    <div class="container-fluid pt-1 pb-1 px-4 mt-4 bg-white">
        <div class="row g-0 d-flex align-items-center justify-content-between">
          <div class="col-12 col-sm-6 col-md-4 col-lg-2">
             <div class="input-group">
@@ -99,15 +99,28 @@
                 </div>
             </div>
             <div class="col-12 col-sm-auto mt-3 mt-sm-0 d-flex align-items-center justify-content-center">
-                <form class="d-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
-            </div>
+    <form class="d-flex ms-4">
+        <input class="form-control border-0 shadow-blue" type="search" placeholder="Search">
+    </form>
+</div>
+
+<style>
+    .shadow-blue {
+        box-shadow: 0 0 10px rgba(135, 206, 235, 0.5); /* Blue shadow */
+    }
+</style>
             <div class="col-12 col-sm-auto mt-3 mt-sm-0">
-                <div class="rounded d-flex align-items-center justify-content-center">
-                    <button type="button" class="btn btn-outline-primary m-2">Add</button>
-                </div>
-            </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-primary m-2 dropdown-toggle" type="button" id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Add
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="addDropdown">
+            <li><a class="dropdown-item" href="#">Agent</a></li>
+            <li><a class="dropdown-item" href="#">Parent</a></li>
+            <li><a class="dropdown-item" href="#">Child</a></li>
+        </ul>
+    </div>
+</div>
 
 
 
