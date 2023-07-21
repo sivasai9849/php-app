@@ -71,6 +71,8 @@ function fetchDeliveryAgents() {
                         <th scope="col">Child</th>
                         <th scope="col">Address</th>
                         <th scope="col">Assign</th>
+                        <th scope="col">Change</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -117,6 +119,7 @@ function fetchDeliveryAgents() {
                                 echo "<td>". $childName."</td>";
                                 echo "<td>" . $address . "</td>";
                                 echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $cId . "'>Assign</button></td>";
+                                echo "<td><button class='btn btn-danger ' data-cid='"   . "'>Change</button></td>";
 
 
                                 echo "</tr>";

@@ -1,63 +1,28 @@
 <?php
-session_start();
+// Replace the database connection details with your own
+include 'db/connect.php';
 
-if (!isset($_SESSION["username"])) {
-    header("Location: login.php");
-    exit;
-}
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["childId"]) && isset($_POST["agentId"])) {
+        $childId = $_POST["childId"];
+        $agentId = $_POST["agentId"];
 
-require_once "./db/connect.php"; // Replace with the correct path to your connect.php file
+        $date = date("Y-m-d"); // Format the date as 'YYYY-MM-DD'
 
-if (isset($_POST["cId"]) && isset($_POST["agentId"])) {
-    $cId = $_POST["cId"];
-    $date = date('Y-m-d');
-    $agentId = $_POST["agentId"]; // Use the selected agent ID from the AJAX request
+        // Update the trips table with the selected agent and today's date
+        $updateSql = "INSERT INTO trips (c_id, agent_id, date) VALUES ($childId, $agentId, '$date')";
+        if ($conn->query($updateSql) === TRUE) {
+            // Fetch the agent name for the response
+            $agentSql = "SELECT agent_name FROM deliveryagent WHERE agent_id = $agentId";
+            $agentResult = $conn->query($agentSql);
+            $agentName = $agentResult->fetch_assoc()["agent_name"];
 
-    // Check if a trip with the same child ID and date already exists
-    $checkSql = "SELECT * FROM trips WHERE c_id = ? AND date = ?";
-    $getAgentIdSql = "SELECT agent_name FROM deliveryagent WHERE agent_id = ?";
-    
-    $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param("ss", $cId, $date);
-    $checkStmt->execute();
-    $checkResult = $checkStmt->get_result();
-
-    if ($checkResult->num_rows > 0) {
-        // Trip already assigned
-        $getAgentIdStmt = $conn->prepare($getAgentIdSql);
-        $getAgentIdStmt->bind_param("s", $agentId);
-        $getAgentIdStmt->execute();
-        $getAgentIdResult = $getAgentIdStmt->get_result();
-
-        if ($getAgentIdResult->num_rows > 0) {
-            $agentData = $getAgentIdResult->fetch_assoc();
-            $agentName = $agentData["agent_name"];
-            echo "Trip assigned to " . $agentName;
+            $response = array("agentName" => $agentName, "date" => $date);
+            echo json_encode($response); // Corrected line to send JSON response
         } else {
-            echo "Agent not found.";
+            echo "Error updating record: " . $conn->error;
         }
-
-        $getAgentIdStmt->close();
-    } else {
-        // Prepare the SQL statement to insert the trip
-        $insertSql = "INSERT INTO trips (date, c_id, agent_id) VALUES (?, ?, ?)";
-        $insertStmt = $conn->prepare($insertSql);
-        $insertStmt->bind_param("sss", $date, $cId, $agentId);
-
-        if ($insertStmt->execute()) {
-            echo "" . $agentName;
-        } else {
-            echo "Error assigning trip: " . $insertStmt->error;
-        }
-
-        $insertStmt->close();
     }
-
-    $checkStmt->close();
-    $conn->close();
-} else {
-    echo "Invalid request.";
 }
-
-
+$conn->close();
 ?>
