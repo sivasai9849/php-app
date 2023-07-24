@@ -60,32 +60,6 @@
         }
 
 
-        function removeTrip(childId) {
-    $.ajax({
-        method: 'POST',
-        url: 'remove_trip.php',
-        data: {
-            childId: childId
-        },
-        success: function(response) {
-            // The trip was successfully removed from the database
-            const statusCell = document.getElementById('status_' + childId);
-            const removeButtonCell = statusCell.nextElementSibling;
-            statusCell.innerHTML = "";
-            removeButtonCell.innerHTML = "";
-            const agentDropdown = document.getElementById('agentDropdown');
-            agentDropdown.disabled = false;
-        },
-        error: function() {
-            alert('Failed to remove the trip. Please try again.');
-        }
-    });
-}
-
-
-
-
-
 
 
     </script>
