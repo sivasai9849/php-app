@@ -5,11 +5,6 @@
     $sql = "SELECT * FROM child c JOIN parent p ON c.p_id = p.p_id JOIN school s ON c.s_id = s.s_id JOIN address a ON a.addr_id=p.addr_id ";
     $result = $conn->query($sql);
 
-    if(isset($_POST['remove_agent'])){
-        while($_POST['delete_child'] ){
-            $delete_child = mysqli_query($conn,"DELETE FROM `trips` WHERE c_id = '{$_POST['delete_child']}' ");
-        }
-    }
 
     if ($result->num_rows > 0) {
         echo '<table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -52,7 +47,7 @@
                 $tripStatus = "Assigned to  " . $agent_name . "  on " . $tripRow["date"];
                 echo "<td id='status_" . $row["c_id"] . "'>" . $tripStatus . "</td>";
 
-                echo "<td><input type='checkbox' id='checkbox' value='{$row['c_id']}' name='delect_child' ></td>";
+                echo "<td><input type='checkbox' id='checkbox_" . $row["c_id"] . "' name='childIdsAssigned[]' value='" . $row["c_id"] . "')'></td>";
             } else {
                 // If trip is not assigned, display checkbox for assignment
                 echo "<td><input type='checkbox' id='checkbox_" . $row["c_id"] . "' name='childIds[]' value='" . $row["c_id"] . "'></td>";

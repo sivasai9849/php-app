@@ -142,6 +142,8 @@ if (!isset($_SESSION["username"])) {
             <!-- Form End -->
             <!-- Button End -->
 
+<!-- Add this button where you want to place it, e.g., below the table -->
+<button class="btn btn-primary rounded-pill m-2" onclick="handleAssignedCheckboxClick()">Remove Selected Assignments</button>
 
 <?php 
 include('./assign.php')
@@ -183,6 +185,75 @@ include('./assign.php')
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+     
+    <!-- In your index.php or any other script file -->
+
+    <script>
+    // Existing functions (handleAssignedCheckboxClick, handleUnassignedCheckboxClick) here...
+
+    function handleAssignedCheckboxClick() {
+        // Your logic for handling checkboxes for assigned children
+        const selectedChildIds = Array.from(document.querySelectorAll('input[name="childIdsAssigned[]"]:checked')).map(el => el.value);
+
+        if (selectedChildIds.length === 0) {
+            alert("Please select children to remove.");
+            return;
+        }
+
+        if (confirm("Do you want to remove the selected assignments?")) {
+            // Make an AJAX call to the assign_trip.php script for removal of assignments
+            $.ajax({
+                method: 'POST',
+                url: 'assign_trip.php',
+                data: {
+                    removeAssignments: true,
+                    childIds: selectedChildIds
+                },
+                success: function (response) {
+                    // Handle the response from the server, if needed
+                    console.log(response);
+                    // Reload the page to update the assignments and checkboxes
+                    location.reload();
+                },
+                error: function () {
+                    // Handle any errors that occurred during the AJAX call
+                    console.log("Failed to remove the assignments.");
+                }
+            });
+        }
+    }
+</script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
