@@ -13,16 +13,17 @@
 
     if ($result->num_rows > 0) {
         echo '<table class="table text-start align-middle table-bordered table-hover mb-0">
-        <form action="#" method="post">
+        <form action="index.php" method="post">
         <thead>
             <tr class="text-dark">
                 <th scope="col">Parent</th>
                 <th scope="col">Address</th>
                 <th scope="col">child</th>
                 <th scope="col">school</th>
-                <th ="col">status</th>
+                <th ="col">Assign</th>
                 <th ="col">Remove</th>
-
+            </tr>
+        </thead>
          ';
         // echo "<thead>";
         // echo "<tr>";
@@ -50,6 +51,7 @@
 
                 $tripStatus = "Assigned to  " . $agent_name . "  on " . $tripRow["date"];
                 echo "<td id='status_" . $row["c_id"] . "'>" . $tripStatus . "</td>";
+
                 echo "<td><input type='checkbox' id='checkbox' value='{$row['c_id']}' name='delect_child' ></td>";
             } else {
                 // If trip is not assigned, display checkbox for assignment
@@ -61,7 +63,6 @@
 
         }
         echo "</table>
-        <input type='submit' name='remove_agent' class='btn btn-primary m-2' value='Primary'>
 
         </form>";
     } else {
