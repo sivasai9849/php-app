@@ -23,25 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "Error updating record: " . $conn->error;
         }
 
-        if (isset($_POST["removeAssignments"])) {
-            // Remove the assignments from the trips table for selected childIds
-            $childIdsString = implode(",", $selectedChildIds);
-            $removeSql = "DELETE FROM trips WHERE c_id IN ($childIdsString)";
-            if ($conn->query($removeSql) === TRUE) {
-                echo "Assignments removed successfully!";
-            } else {
-                echo "Error removing assignments: " . $conn->error;
-            }
-        }
-
-
-
-
-
-
-
-
-
+    
 
 
 

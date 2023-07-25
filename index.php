@@ -185,75 +185,7 @@ include('./assign.php')
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-     
-    <!-- In your index.php or any other script file -->
-
-    <script>
-    // Existing functions (handleAssignedCheckboxClick, handleUnassignedCheckboxClick) here...
-
-    function handleAssignedCheckboxClick() {
-        // Your logic for handling checkboxes for assigned children
-        const selectedChildIds = Array.from(document.querySelectorAll('input[name="childIdsAssigned[]"]:checked')).map(el => el.value);
-
-        if (selectedChildIds.length === 0) {
-            alert("Please select children to remove.");
-            return;
-        }
-
-        if (confirm("Do you want to remove the selected assignments?")) {
-            // Make an AJAX call to the assign_trip.php script for removal of assignments
-            $.ajax({
-                method: 'POST',
-                url: 'assign_trip.php',
-                data: {
-                    removeAssignments: true,
-                    childIds: selectedChildIds
-                },
-                success: function (response) {
-                    // Handle the response from the server, if needed
-                    console.log(response);
-                    // Reload the page to update the assignments and checkboxes
-                    location.reload();
-                },
-                error: function () {
-                    // Handle any errors that occurred during the AJAX call
-                    console.log("Failed to remove the assignments.");
-                }
-            });
-        }
-    }
-</script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
