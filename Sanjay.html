@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moveable Buttons (Colored Buttons with Scroll)</title>
+    <style>
+        /* CSS for the buttons */
+        .blue-button {
+            background-color: #0074D9; /* Blue color */
+            color: #ffffff; /* Text color (white) */
+        }
+
+        .green-button {
+            background-color: #2ECC40; /* Green color */
+            color: #ffffff; /* Text color (white) */
+        }
+
+        .red-button {
+            background-color: #FF4136; /* Red color */
+            color: #ffffff; /* Text color (white) */
+        }
+
+        .yellow-button {
+            background-color: #FFDC00; /* Yellow color */
+            color: #000000; /* Text color (black) */
+        }
+
+        .purple-button {
+            background-color: #B10DC9; /* Purple color */
+            color: #ffffff; /* Text color (white) */
+        }
+
+        /* CSS for the buttons - common styles */
+        .blue-button,
+        .green-button,
+        .red-button,
+        .yellow-button,
+        .purple-button {
+            border: none; /* Remove button border */
+            padding: 12px 20px; /* Add padding around the text */
+            text-align: center; /* Center the text horizontally */
+            text-decoration: none; /* Remove underlines from the text */
+            display: inline-block; /* Display the button as an inline element */
+            font-size: 16px; /* Set the font size */
+            border-radius: 5px; /* Add rounded corners to the button */
+            cursor: pointer; /* Show a pointer cursor when hovering over the button */
+            position: absolute; /* Set the buttons' position to absolute */
+        }
+
+        /* Style for the buttons when hovered over */
+        .blue-button:hover,
+        .green-button:hover,
+        .red-button:hover,
+        .yellow-button:hover,
+        .purple-button:hover {
+            opacity: 0.8; /* Slightly reduce opacity on hover */
+        }
+
+        /* Style for the buttons when clicked (active state) */
+        .blue-button:active,
+        .green-button:active,
+        .red-button:active,
+        .yellow-button:active,
+        .purple-button:active {
+            opacity: 0.6; /* Slightly reduce opacity when clicked */
+        }
+
+        /* Additional style for the container */
+        #button-container {
+            position: relative; /* Ensure the container is the reference for absolute positioning */
+            width: 500px; /* Set container width to your desired value */
+            min-height: 100px; /* Set a minimum height to ensure the container has a visible area */
+            border: 4px solid red; /* Add a thick red border to the container */
+            overflow-y: scroll; /* Add scroll functionality for vertical overflow */
+            padding-right: 10px; /* Add some padding to prevent the buttons from being hidden behind the scrollbar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Buttons can be positioned anywhere within this container -->
+    <div id="button-container">
+        <div class="blue-button" draggable="true" style="left: 50px; top: 50px;">Blue Button</div>
+        <div class="green-button" draggable="true" style="left: 50px; top: 150px;">Green Button</div>
+        <div class="red-button" draggable="true" style="left: 50px; top: 250px;">Red Button</div>
+        <div class="yellow-button" draggable="true" style="left: 50px; top: 350px;">Yellow Button</div>
+        <div class="purple-button" draggable="true" style="left: 50px; top: 450px;">Purple Button</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 550px;">Blue Button</div>
+        <div class="green-button" draggable="true" style="left: 50px; top: 650px;">Green Button</div>
+        <!-- Add more buttons as needed -->
+    </div>
+
+    <script>
+        // Function to enable vertical drag and drop for the buttons
+        function enableVerticalDragAndDrop() {
+            const buttons = document.querySelectorAll(".blue-button, .green-button, .red-button, .yellow-button, .purple-button");
+
+            let isDragging = false;
+            let draggingButton = null;
+            let initialTop, currentTop;
+
+            function updateButtonPosition(y) {
+                draggingButton.style.top = `${y}px`;
+            }
+
+            function onMouseMove(event) {
+                if (!isDragging) return;
+
+                const y = event.clientY - initialTop;
+
+                // Boundary checks to prevent buttons from going out of the container
+                const containerRect = document.getElementById("button-container").getBoundingClientRect();
+                const buttonRect = draggingButton.getBoundingClientRect();
+
+                const minY = containerRect.top;
+                const maxY = containerRect.bottom - buttonRect.height;
+
+                currentTop = Math.min(Math.max(y, minY), maxY);
+
+                // Update the button's position
+                updateButtonPosition(currentTop);
+                repositionButtons();
+            }
+
+            function repositionButtons() {
+                // Find the buttons below the dragging button
+                const belowButtons = Array.from(buttons).filter(btn => {
+                    if (btn === draggingButton) return false;
+                    const btnRect = btn.getBoundingClientRect();
+                    return btnRect.top > currentTop;
+                });
+
+                // Adjust the position of the below buttons to create space for the dragging button
+                let lastAdjustedButton = null;
+                belowButtons.forEach(btn => {
+                    const btnRect = btn.getBoundingClientRect();
+                    const spaceRequired = btnRect.height + 10; // Adding extra space between buttons
+
+                    if (btnRect.top < currentTop + spaceRequired) {
+                        if (lastAdjustedButton === null) {
+                            lastAdjustedButton = btn;
+                        }
+
+                        const newY = lastAdjustedButton.getBoundingClientRect().bottom + 10;
+                        btn.style.top = `${newY}px`;
+                        lastAdjustedButton = btn;
+                    }
+                });
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener("mousedown", (event) => {
+                    isDragging = true;
+                    draggingButton = button;
+                    initialTop = event.clientY - parseInt(draggingButton.style.top);
+
+                    // Prevent the default behavior (fix for cursor symbol issue)
+                    event.preventDefault();
+                });
+
+                button.addEventListener("mouseup", () => {
+                    isDragging = false;
+                });
+            });
+
+            document.addEventListener("mousemove", onMouseMove);
+
+            // Save the button positions in Session Storage just before the page is unloaded (onbeforeunload event)
+            window.onbeforeunload = () => {
+                buttons.forEach(button => {
+                    const position = { top: parseInt(button.style.top) };
+                    sessionStorage.setItem(button.textContent, JSON.stringify(position));
+                });
+            };
+
+            // Retrieve the previous positions from Session Storage (if available)
+            buttons.forEach(button => {
+                const storedPosition = sessionStorage.getItem(button.textContent);
+                if (storedPosition) {
+                    const { top } = JSON.parse(storedPosition);
+                    button.style.top = `${top}px`;
+                }
+            });
+
+            // Dynamically adjust container height based on the last button's position and button dimensions
+            const lastButton = buttons[buttons.length - 1];
+            const container = document.getElementById("button-container");
+            const containerHeight = lastButton.offsetTop + lastButton.offsetHeight + 20; // Adding extra 20px for padding
+
+            // Limit the container height to allow space for one extra button
+            const maxContainerHeight = lastButton.offsetTop + (2 * lastButton.offsetHeight) + 20;
+            container.style.height = `${Math.min(containerHeight, maxContainerHeight)}px`;
+        }
+
+        // Call the function to enable vertical drag and drop for buttons when the page loads
+        window.onload = enableVerticalDragAndDrop;
+    </script>
+</body>
+</html>
