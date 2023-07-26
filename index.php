@@ -184,6 +184,30 @@ include('./assign.php')
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <!-- ... Your other HTML code ... -->
+
+<script>
+    // Function to remove an assignment
+    function removeAssignment(childId) {
+        $.ajax({
+            method: 'POST',
+            url: 'remove_assignment.php',
+            data: {
+                childId: childId,
+            },
+            success: function(response) {
+                // On successful removal, reload the page to update the table
+                location.reload();
+            },
+            error: function() {
+                alert('Failed to remove the assignment. Please try again.');
+            }
+        });
+    }
+</script>
+
+<!-- ... Your other HTML code ... -->
+
     
 </body>
 
