@@ -16,6 +16,7 @@
                 <th scope="col">child</th>
                 <th scope="col">school</th>
                 <th ="col">Assign</th>
+                <th ="col">Remove</th>
             </tr>
         </thead>
          ';
@@ -45,6 +46,11 @@
 
                 $tripStatus = "Assigned to  " . $agent_name . "  on " . $tripRow["date"];
                 echo "<td id='status_" . $row["c_id"] . "'>" . $tripStatus . "</td>";
+
+
+                    // Add a "Remove" button with an event handler to remove the assignment
+                     echo "<td><button class='btn btn-danger btn-sm' onclick='removeAssignment(" . $row["c_id"] . ")'>Remove</button></td>";
+
 
             } else {
                 // If trip is not assigned, display checkbox for assignment
