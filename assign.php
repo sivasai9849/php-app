@@ -53,9 +53,7 @@ function fetchDeliveryAgents()
         </div>
 
         <!-- Second Column - Remove Button -->
-        <div class="col-sm-6 d-flex justify-content-center align-items-center">
-            <button class="btn btn-primary  m-2" onclick="handleAssignedCheckboxClick()">Remove Selected Assignments</button>
-        </div>
+      
     </div>
 </div>
 
