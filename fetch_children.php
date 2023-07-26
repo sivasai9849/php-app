@@ -16,7 +16,6 @@
                 <th scope="col">child</th>
                 <th scope="col">school</th>
                 <th ="col">Assign</th>
-                <th ="col">Remove</th>
             </tr>
         </thead>
          ';
@@ -47,7 +46,6 @@
                 $tripStatus = "Assigned to  " . $agent_name . "  on " . $tripRow["date"];
                 echo "<td id='status_" . $row["c_id"] . "'>" . $tripStatus . "</td>";
 
-                echo "<td><input type='checkbox' id='checkbox_" . $row["c_id"] . "' name='childIdsAssigned[]' value='" . $row["c_id"] . "')'></td>";
             } else {
                 // If trip is not assigned, display checkbox for assignment
                 echo "<td><input type='checkbox' id='checkbox_" . $row["c_id"] . "' name='childIds[]' value='" . $row["c_id"] . "'></td>";

@@ -143,7 +143,6 @@ if (!isset($_SESSION["username"])) {
             <!-- Button End -->
 
 <!-- Add this button where you want to place it, e.g., below the table -->
-<button class="btn btn-primary rounded-pill m-2" onclick="handleAssignedCheckboxClick()">Remove Selected Assignments</button>
 
 <?php 
 include('./assign.php')

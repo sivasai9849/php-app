@@ -30,7 +30,7 @@ function fetchDeliveryAgents()
     }
 
     echo "</select>";
-    echo "<button class='btn btn-primary rounded-pill m-2' id='reloadButton' onclick='assignTrips()'>Assign Selected Trips</button>";
+    echo "<button class='col-sm-6 btn btn-primary  m-2 d-flex justify-content-center' id='reloadButton' onclick='assignTrips()'>Assign Selected Trips</button>";
 }
 
 
@@ -39,19 +39,26 @@ function fetchDeliveryAgents()
 
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <!-- First Column - Delivery Agents -->
+        <div class="col-sm-6">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Delivery Agents</h6>
                 <div class="">
                     <select class="form-select" id="agentDropdown" aria-label="Floating label select example">
                         <option value=''>Select Delivery Agents</option>
-                        <?php fetchDeliveryAgents()  ?>
+                        <?php fetchDeliveryAgents() ?>
                     </select>
                 </div>
             </div>
         </div>
+
+        <!-- Second Column - Remove Button -->
+        <div class="col-sm-6 d-flex justify-content-center align-items-center">
+            <button class="btn btn-primary  m-2" onclick="handleAssignedCheckboxClick()">Remove Selected Assignments</button>
+        </div>
     </div>
 </div>
+
 
 
 <div class="container-fluid pt-4 px-4">
