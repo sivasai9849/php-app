@@ -49,7 +49,7 @@
 
 
                     // Add a "Remove" button with an event handler to remove the assignment
-                     echo "<td><button class='btn btn-danger btn-sm' onclick='removeAssignment(" . $row["c_id"] . ")'>Remove</button></td>";
+                     echo "<td><button class='btn btn-danger btn-sm'id='reloadButton' onclick='removeAssignment(" . $row["c_id"] . ")'>Remove</button></td>";
 
 
             } else {
