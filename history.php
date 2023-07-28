@@ -55,8 +55,9 @@ include_once 'db/connect.php';
         <div class="container-fluid pt-1 pb-1 px-4 mt-4 bg-white">
             <!-- Rest of the code remains the same -->
 
+            
             <!-- Trips Table Start -->
-            <div class="table-responsive">
+            <div class=" table table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
