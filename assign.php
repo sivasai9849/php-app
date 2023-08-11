@@ -1,47 +1,63 @@
-
 <?php
-require_once "connect.php"; // Replace with the correct path to your connect.php file
 
-function fetchDeliveryAgents() {
+
+if (!isset($_SESSION["username"])) {
+    header("location:login.php");
+    exit;
+}
+
+require_once "./db/connect.php"; // Replace with the correct path to your connect.php file
+
+
+
+function fetchDeliveryAgents()
+{
     global $conn; // Assuming $conn is the database connection variable defined in connect.php
 
+
+
     // SQL query to fetch delivery agent names
-    $sql = "SELECT agent_id, agent_name FROM deliveryagent";
+    $agentsSql = "SELECT * FROM deliveryagent";
 
     // Execute the query
-    $result = $conn->query($sql);
+    $agentsResult = $conn->query($agentsSql);
+
+
 
     // Check if any rows are returned
-    if ($result->num_rows > 0) {
-        // Loop through the rows and fetch data
-        while ($row = $result->fetch_assoc()) {
-            $agentId = $row["agent_id"];
-            $agentName = $row["agent_name"];
-
-            // Create option with agent ID as value and agent name as display text
-            echo '<option value="' . $agentId . '">' . $agentName . '</option>';
-        }
-    } else {
-        echo '<option value="" disabled>No delivery agents found</option>';
+    while ($agentRow = $agentsResult->fetch_assoc()) {
+        echo "<option value='" . $agentRow["agent_id"] . "'>" . $agentRow["agent_name"] . "</option>";
     }
+
+    echo "</select>";
+    echo "<button class='col-sm-6 btn btn-primary  m-2 d-flex justify-content-center' id='reloadButton' onclick='assignTrips()'>Assign Selected Trips</button>";
 }
+
+
+
 ?>
 
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <!-- First Column - Delivery Agents -->
+        <div class="col-sm-6">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Delivery Agents</h6>
                 <div class="">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                        <option class="" selected>Select Delivery Agents</option>
-                        <?php fetchDeliveryAgents(); ?>
+                    <select class="form-select" id="agentDropdown" aria-label="Floating label select example">
+                        <option value=''>Select Delivery Agents</option>
+                        <?php fetchDeliveryAgents() ?>
                     </select>
                 </div>
             </div>
         </div>
+
+        <!-- Second Column - Remove Button -->
+      
     </div>
 </div>
+
+
 
 <div class="container-fluid pt-4 px-4">
     <div class="bg-light text-center rounded p-4">
@@ -50,105 +66,58 @@ function fetchDeliveryAgents() {
             <a href="#">Show All</a>
         </div>
         <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col">Date</th>
-                        <th scope="col">School</th>
-                        <th scope="col">Parent</th>
-                        <th scope="col">Child</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Assign</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once "connect.php"; // Replace with the correct path to your connect.php file
-
-                    function fetchData()
-                    {
-                        global $conn; // Assuming $conn is the database connection variable defined in connect.php
-
-                        // SQL query to fetch data from the table
-                        $sql = "SELECT
-                        p.p_name AS parent_name,
-                        c.c_name AS child_name,
-                        a.apartment,
-                        a.area,
-                        a.pincode,
-                        s.s_name AS school_name
-                    FROM
-                        parent p
-                        INNER JOIN address a ON p.addr_id = a.addr_id
-                        INNER JOIN child c ON p.p_id = c.p_id
-                        INNER JOIN school s ON c.s_id = s.s_id";
-            
-
-                        // Execute the query
-                        $result = $conn->query($sql);
-
-                        // Check if any rows are returned
-                        if ($result->num_rows > 0) {
-                            // Fetch and display the data
-                            while ($row = $result->fetch_assoc()) {
-                                $date  = date('Y-m-d'); 
-                                $schoolName = $row["school_name"];
-                                $parentName = $row["parent_name"];
-                                $address = $row["apartment"] . ", " . $row["area"] . ", " . $row["pincode"];
-                                $childName = $row["child_name"];
-                                
-
-                                echo "<tr>";
-                                echo "<td>" . $date . "</td>";
-                                echo "<td>" . $schoolName . "</td>";
-                                echo "<td>" . $parentName . "</td>";
-                                echo "<td>". $childName."</td>";
-                                echo "<td>" . $address . "</td>";
-                                echo "<td><button class='btn btn-sm btn-primary assign-btn' data-cid='" . $cId . "'>Assign</button></td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr>";
-                            echo "<td colspan='6'>No data found.</td>";
-                            echo "</tr>";
-                        }
-                    }
-
-                    fetchData();
+        <?php
+                    include_once("fetch_children.php");
                     ?>
-                </tbody>
-            </table>
+           
         </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Assign button click event
-        $(".assign-btn").click(function () {
-            var cId = $(this).data("cid");
-            var agentId = $("#floatingSelect").val(); // Get the selected agent ID from the dropdown
+    function assignTrip(childId) {
+        const agentDropdown = document.getElementById('agentDropdown');
+        const selectedAgentId = agentDropdown.value;
 
-            // AJAX request to assign the trip
-            $.ajax({
-                url: "./assign_trip.php", // Replace with the path to your assign_trip.php file
-                method: "POST",
-                data: {
-                    cId: cId,
-                    agentId: agentId // Pass the selected agent ID
-                },
-                success: function (response) {
-                    // Handle the response
-                    console.log(response);
-                    alert("Trip assigned successfully.");
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error
-                    console.error(xhr.responseText);
-                    alert("Failed to assign trip. Please try again.");
+        if (!selectedAgentId) {
+            alert("Please select an agent for assignment.");
+            return;
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: 'assign_trip.php',
+            data: {
+                childId: childId,
+                agentId: selectedAgentId
+            },
+            success: function(response) {
+                const agentName = response.agentName;
+                const date = response.date;
+                const statusCell = document.getElementById('status_' + childId);
+                if (statusCell) {
+                    statusCell.innerHTML = "Assigned to Agent " + agentName + " on " + date;
+                    agentDropdown.disabled = true;
                 }
-            });
+            },
+            error: function() {
+                alert('Failed to assign the trip. Please try again.');
+            }
         });
-    });
+    }
+
+    function assignTrips() {
+        const selectedChildIds = Array.from(document.querySelectorAll('input[name="childIds[]"]:checked')).map(el => el.value);
+        const agentId = document.getElementById('agentDropdown').value;
+
+        if (selectedChildIds.length === 0 || !agentId) {
+            alert("Please select children and agent for assignment.");
+            return;
+        }
+
+        selectedChildIds.forEach(childId => {
+            assignTrip(childId);
+        });
+    }
 </script>

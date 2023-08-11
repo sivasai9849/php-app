@@ -1,9 +1,16 @@
+<?php
+ session_start();
+    if(!isset($_SESSION['username'])){
+        header('location:login.php');
+    }
+    include_once 'db/connect.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Lunch Box</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -45,26 +52,60 @@
         <!-- Sidebar Start -->
         <?php include 'sidebar.php'; ?>
         <!-- Sidebar End -->
+   <!-- Content Start -->
+<div class="content">
+    <!-- Navbar Start -->
+    <div class="container-fluid">
+        <?php include 'navbar.php'; ?>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Horizontal Bar Start -->
+    <style>
+        .datepicker-input {
+        height: 38px;
+        font-size: 12px;
+         }
+      </style>
+   
 
 
-        <!-- Content Start -->
-        <div class="content">
-            <!-- Navbar Start -->
-            <?php include 'navbar.php'; ?>
-            <!-- Navbar End -->
-
-
-            <!-- Chart Start -->
-          
-            <!-- Chart End -->
-             <!-- Form Start -->
-            <!-- Form End -->
-
-         
+   <div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Customers Data</h6>
+            <a href="#">Show All</a>
         </div>
-        <!-- Content End -->
+        <div class="table-responsive">
+       
+           
+        </div>
+    </div>
+</div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Horizontal Bar End -->
+</div>
+<!-- Content End -->
+  
+        
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
@@ -79,9 +120,18 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+
+
+
+
+
+    
+
 </body>
 
 </html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moveable Buttons</title>
+    <style>
+        /* CSS for the button */
+        .blue-button {
+            background-color: #0074D9; /* Blue color */
+            color: #ffffff; /* Text color (white) */
+            border: none; /* Remove button border */
+            padding: 12px 20px; /* Add padding around the text */
+            text-align: center; /* Center the text horizontally */
+            text-decoration: none; /* Remove underlines from the text */
+            display: inline-block; /* Display the button as an inline element */
+            font-size: 16px; /* Set the font size */
+            border-radius: 5px; /* Add rounded corners to the button */
+            cursor: pointer; /* Show a pointer cursor when hovering over the button */
+            position: absolute; /* Set the buttons' position to absolute */
+        }
+
+        /* Style for the button when hovered over */
+        .blue-button:hover {
+            background-color: #0056b3; /* Darker shade of blue on hover */
+        }
+
+        /* Style for the button when clicked (active state) */
+        .blue-button:active {
+            background-color: #003366; /* Even darker shade of blue when clicked */
+        }
+
+        /* Additional style for the container */
+        #button-container {
+            position: relative; /* Ensure the container is the reference for absolute positioning */
+            width: 500px; /* Set container width to your desired value */
+            height: 300px; /* Set container height to your desired value */
+            border: 4px solid red; /* Add a thick red border to the container */
+        }
+    </style>
+</head>
+<body>
+    <!-- Buttons can be positioned anywhere within this container -->
+    <div id="button-container">
+        <div class="blue-button" draggable="true" style="left: 50px; top: 50px;">Prudhvi</div>
+        <div class="blue-button" draggable="true" style="left: 200px; top: 100px;">Sanjay</div>
+        <div class="blue-button" draggable="true" style="left: 300px; top: 150px;">Satya</div>
+        <div class="blue-button" draggable="true" style="left: 100px; top: 200px;">Pandu</div>
+        <div class="blue-button" draggable="true" style="left: 100px; top: 200px;">Rithvik</div>
+    </div>
+
+    <script>
+        // Function to enable drag and drop for the buttons
+        function enableDragAndDrop() {
+            const buttons = document.querySelectorAll(".blue-button");
+
+            let isDragging = false;
+            let draggingButton = null;
+            let offsetX, offsetY;
+
+            function updateButtonPosition(x, y) {
+                draggingButton.style.left = `${x}px`;
+                draggingButton.style.top = `${y}px`;
+            }
+
+            function onMouseMove(event) {
+                if (!isDragging) return;
+
+                const x = event.clientX - offsetX;
+                const y = event.clientY - offsetY;
+
+                // Boundary checks to prevent buttons from going out of the container
+                const containerRect = document.getElementById("button-container").getBoundingClientRect();
+                const buttonRect = draggingButton.getBoundingClientRect();
+
+                const minX = containerRect.left;
+                const maxX = containerRect.right - buttonRect.width;
+                const minY = containerRect.top;
+                const maxY = containerRect.bottom - buttonRect.height;
+
+                const clampedX = Math.min(Math.max(x, minX), maxX);
+                const clampedY = Math.min(Math.max(y, minY), maxY);
+
+                // Update the button's position
+                updateButtonPosition(clampedX, clampedY);
+                requestAnimationFrame(() => onMouseMove(event));
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener("mousedown", (event) => {
+                    isDragging = true;
+                    draggingButton = button;
+                    offsetX = event.clientX - parseInt(draggingButton.style.left);
+                    offsetY = event.clientY - parseInt(draggingButton.style.top);
+
+                    // Prevent the default behavior (fix for cursor symbol issue)
+                    event.preventDefault();
+                });
+
+                button.addEventListener("mouseup", () => {
+                    isDragging = false;
+                });
+            });
+
+            document.addEventListener("mousemove", onMouseMove);
+
+            // Save the button positions in Session Storage just before the page is unloaded (onbeforeunload event)
+            window.onbeforeunload = () => {
+                buttons.forEach(button => {
+                    const position = { left: parseInt(button.style.left), top: parseInt(button.style.top) };
+                    sessionStorage.setItem(button.textContent, JSON.stringify(position));
+                });
+            };
+
+            // Retrieve the previous positions from Session Storage (if available)
+            buttons.forEach(button => {
+                const storedPosition = sessionStorage.getItem(button.textContent);
+                if (storedPosition) {
+                    const { left, top } = JSON.parse(storedPosition);
+                    button.style.left = `${left}px`;
+                    button.style.top = `${top}px`;
+                }
+            });
+        }
+
+        // Call the function to enable drag and drop for buttons when the page loads
+        window.onload = enableDragAndDrop;
+    </script>
+</body>
+</html>

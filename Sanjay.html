@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moveable Buttons (Dynamic Container Height)</title>
+    <style>
+        /* CSS for the button */
+        .blue-button {
+            background-color: #0074D9; /* Blue color */
+            color: #ffffff; /* Text color (white) */
+            border: none; /* Remove button border */
+            padding: 12px 20px; /* Add padding around the text */
+            text-align: center; /* Center the text horizontally */
+            text-decoration: none; /* Remove underlines from the text */
+            display: inline-block; /* Display the button as an inline element */
+            font-size: 16px; /* Set the font size */
+            border-radius: 5px; /* Add rounded corners to the button */
+            cursor: pointer; /* Show a pointer cursor when hovering over the button */
+            position: absolute; /* Set the buttons' position to absolute */
+        }
+
+        /* Style for the button when hovered over */
+        .blue-button:hover {
+            background-color: #0056b3; /* Darker shade of blue on hover */
+        }
+
+        /* Style for the button when clicked (active state) */
+        .blue-button:active {
+            background-color: #003366; /* Even darker shade of blue when clicked */
+        }
+
+        /* Additional style for the container */
+        #button-container {
+            position: relative; /* Ensure the container is the reference for absolute positioning */
+            width: 500px; /* Set container width to your desired value */
+            min-height: 800px; /* Set a minimum height to ensure the container has a visible area */
+            border: 4px solid red; /* Add a thick red border to the container */
+            overflow-y: hidden; /* Hide the vertical scrollbar */
+            padding-right: 10px; /* Add some padding to prevent the buttons from being hidden behind the scrollbar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Buttons can be positioned anywhere within this container -->
+    <div id="button-container">
+        <div class="blue-button" draggable="true" style="left: 50px; top: 50px;">Prudhvi</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 150px;">Sanjay</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 250px;">Satya</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 350px;">Pandu</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 450px;">Rithvik</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 550px;">Button 6</div>
+        <div class="blue-button" draggable="true" style="left: 50px; top: 650px;">Button 7</div>
+        <!-- Add more buttons as needed -->
+    </div>
+
+    <script>
+        // Function to enable vertical drag and drop for the buttons
+        function enableVerticalDragAndDrop() {
+            const buttons = document.querySelectorAll(".blue-button");
+
+            let isDragging = false;
+            let draggingButton = null;
+            let offsetY;
+
+            function updateButtonPosition(y) {
+                draggingButton.style.top = `${y}px`;
+            }
+
+            function onMouseMove(event) {
+                if (!isDragging) return;
+
+                const y = event.clientY - offsetY;
+
+                // Boundary checks to prevent buttons from going out of the container
+                const containerRect = document.getElementById("button-container").getBoundingClientRect();
+                const buttonRect = draggingButton.getBoundingClientRect();
+
+                const minY = containerRect.top;
+                const maxY = containerRect.bottom - buttonRect.height;
+
+                const clampedY = Math.min(Math.max(y, minY), maxY);
+
+                // Update the button's position
+                updateButtonPosition(clampedY);
+                requestAnimationFrame(() => onMouseMove(event));
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener("mousedown", (event) => {
+                    isDragging = true;
+                    draggingButton = button;
+                    offsetY = event.clientY - parseInt(draggingButton.style.top);
+
+                    // Prevent the default behavior (fix for cursor symbol issue)
+                    event.preventDefault();
+                });
+
+                button.addEventListener("mouseup", () => {
+                    isDragging = false;
+                });
+            });
+
+            document.addEventListener("mousemove", onMouseMove);
+
+            // Save the button positions in Session Storage just before the page is unloaded (onbeforeunload event)
+            window.onbeforeunload = () => {
+                buttons.forEach(button => {
+                    const position = { top: parseInt(button.style.top) };
+                    sessionStorage.setItem(button.textContent, JSON.stringify(position));
+                });
+            };
+
+            // Retrieve the previous positions from Session Storage (if available)
+            buttons.forEach(button => {
+                const storedPosition = sessionStorage.getItem(button.textContent);
+                if (storedPosition) {
+                    const { top } = JSON.parse(storedPosition);
+                    button.style.top = `${top}px`;
+                }
+            });
+
+            // Dynamically adjust container height based on the total height of all buttons
+            const container = document.getElementById("button-container");
+            const totalButtonHeight = Math.max(
+                buttons[buttons.length - 1].getBoundingClientRect().bottom,
+                container.getBoundingClientRect().height
+            );
+
+            container.style.height = `${totalButtonHeight}px`;
+        }
+
+        // Call the function to enable vertical drag and drop for buttons when the page loads
+        window.onload = enableVerticalDragAndDrop;
+    </script>
+</body>
+</html>
